@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Random User</string>
+    <string name="no_data_available">No data available</string>
+    <string name="no_results_for_filter">"No results for the filter\n\"%s\""</string>
+    <string name="action_filter">Filter</string>
+    <string name="connection_error">Network not available</string>
+    <string name="gender">Gender:</string>
+    <string name="registered_since">Registered since:</string>
+    <string name="address">Address:</string>
+    <string name="email">Email:</string>
+    <string name="hi">Hi, my name is</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="user_delete">Delete user</string>
+    <string name="action_restore">Restore blocked</string>
+    <string name="blocked_users_restored">Blocked users restored</string>
+    <string name="restore_blocked_users">Restore blocked users</string>
+</resources>

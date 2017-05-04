@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="grey">#cfcfcf</color>
+    <color name="grey_dark">#979797</color>
+    <color name="red">#ff0000</color>
+    <color name="textColorTitle">#b0a70000</color>
+    <color name="background">#252525</color>
+    <color name="searchBackground">#35000000</color>
+    <color name="hint">#818181</color>
+    <color name="dark">#ff151515</color>
+    <color name="card_background">#ffffff</color>
+    <color name="toolbar_background">#80000000</color>
+    <color name="buttonPressed">@color/colorPrimaryDark</color>
+    <color name="buttonDisabled">#818181</color>
+    <color name="buttonFocused">@color/colorAccent</color>
+    <color name="buttonDefault">@color/colorAccent</color>
+</resources>

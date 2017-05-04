@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white_36dp"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:title="@string/action_filter" />
+    <item
+        android:id="@+id/action_restore"
+        android:icon="@drawable/ic_settings_backup_restore_white_36dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_restore" />
+</menu>
