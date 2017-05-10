@@ -9,6 +9,7 @@ import com.siziksu.ru.common.CollectionsManager;
 import com.siziksu.ru.common.ConnectionManager;
 import com.siziksu.ru.common.PreferencesManager;
 import com.siziksu.ru.dagger.scope.AppScope;
+import com.siziksu.ru.ui.main.IMainPagination;
 import com.siziksu.ru.ui.main.IUsersAdapter;
 import com.siziksu.ru.ui.main.MainPagination;
 import com.siziksu.ru.ui.main.UsersAdapter;
@@ -53,8 +54,8 @@ public final class AppModule {
     }
 
     @Provides
-    MainPagination providesMainPagination() {
-        return new MainPagination();
+    IMainPagination providesMainPagination(MainPagination mainPagination) {
+        return mainPagination;
     }
 
     @Provides

@@ -40,7 +40,7 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
     @Inject
     IUsersAdapter adapter;
     @Inject
-    MainPagination mainPagination;
+    IMainPagination mainPagination;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
