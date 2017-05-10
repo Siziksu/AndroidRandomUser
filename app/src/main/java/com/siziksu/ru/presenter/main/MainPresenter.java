@@ -17,6 +17,8 @@ import com.siziksu.ru.domain.main.IMainRequests;
 import com.siziksu.ru.ui.main.MainBottomSheetFragment;
 import com.siziksu.ru.ui.fragment.MessageFragment;
 
+import java.net.SocketTimeoutException;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -87,6 +89,9 @@ public final class MainPresenter extends IMainPresenter {
     private void onError(Throwable throwable) {
         disposable = null;
         Log.e(Constants.TAG, throwable.getMessage(), throwable);
+        if (throwable instanceof SocketTimeoutException) {
+            doIfViewIsRegistered(() -> view.connectionTimeout());
+        }
         stopProgress();
     }
 
@@ -123,6 +128,7 @@ public final class MainPresenter extends IMainPresenter {
         doIfViewIsRegistered(() -> {
             if (!isConnected) {
                 Log.d(Constants.TAG, view.getActivity().getResources().getString(R.string.connection_error));
+                stopProgress();
             } else {
                 consumer.consume();
             }

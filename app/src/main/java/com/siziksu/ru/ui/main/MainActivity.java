@@ -254,14 +254,16 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void showConnected(boolean value) {
         noData(!value, getString(R.string.connection_error));
-        if (!value) {
-            Snackbar.make(toolbar, getString(R.string.connection_error), Snackbar.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     public void stopRefreshing() {
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void connectionTimeout() {
+        noData(true, getString(R.string.connection_timeout));
     }
 
     private void requestFirstPage() {

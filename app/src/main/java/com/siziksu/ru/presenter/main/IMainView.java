@@ -12,4 +12,6 @@ public interface IMainView extends IBaseView {
     void showConnected(boolean value);
 
     void stopRefreshing();
+
+    void connectionTimeout();
 }

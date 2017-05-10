@@ -17,4 +17,5 @@
     <string name="action_restore">Restore blocked</string>
     <string name="blocked_users_restored">Blocked users restored</string>
     <string name="restore_blocked_users">Restore blocked users</string>
+    <string name="connection_timeout">"Connection timeout\n\nTry again refreshing"</string>
 </resources>
