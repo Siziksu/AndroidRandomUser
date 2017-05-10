@@ -10,6 +10,7 @@ import com.siziksu.ru.common.ConnectionManager;
 import com.siziksu.ru.common.PreferencesManager;
 import com.siziksu.ru.dagger.scope.AppScope;
 import com.siziksu.ru.ui.main.IUsersAdapter;
+import com.siziksu.ru.ui.main.MainPagination;
 import com.siziksu.ru.ui.main.UsersAdapter;
 
 import dagger.Module;
@@ -49,6 +50,11 @@ public final class AppModule {
     @Provides
     ConnectionManager providesConnectionManager(Context context) {
         return new ConnectionManager(context);
+    }
+
+    @Provides
+    MainPagination providesMainPagination() {
+        return new MainPagination();
     }
 
     @Provides

@@ -10,7 +10,7 @@ public final class Constants {
 
     public static final String EXTRAS_FILTER = "filter";
     public static final String EXTRAS_NEXT_PAGE = "next_page";
-    public static final String EXTRAS_TOTAL_PAGES = "total_pages";
+    public static final String EXTRAS_CURRENT_PAGE = "current_page";
 
     public static final String FRAGMENT_TAG_MAIN_BOTTOM = "main_bottom_fragment";
     public static final String FRAGMENT_TAG_DIALOG_YES_NO = "dialog_message_fragment";

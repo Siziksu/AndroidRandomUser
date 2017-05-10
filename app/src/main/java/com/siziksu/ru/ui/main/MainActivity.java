@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +39,8 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
     IMainPresenter mainPresenter;
     @Inject
     IUsersAdapter adapter;
+    @Inject
+    MainPagination mainPagination;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -52,11 +53,7 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
     @BindView(R.id.loading)
     ProgressBar loading;
 
-    private static final int FIRST_PAGE = 1;
-
     private SearchView searchView;
-    private int nextPage = FIRST_PAGE;
-    private int currentPage = FIRST_PAGE;
     private boolean firstTime = true;
     private String filter;
     private boolean refreshing;
@@ -72,7 +69,6 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     private void initRecyclerView() {
-        users.setHasFixedSize(true);
         adapter.init(
                 (v, position) -> {
                     User user = adapter.getItem(position);
@@ -93,11 +89,11 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
                     }
                 },
                 () -> {
-                    if (nextPage < FIRST_PAGE || nextPage < currentPage) {
+                    if (!mainPagination.shouldLoadMore()) {
                         return;
                     }
                     if (!adapter.isFiltered()) {
-                        mainPresenter.getUsers(nextPage);
+                        mainPresenter.getUsers(mainPagination.getNextPage());
                     }
                 },
                 string -> {
@@ -113,6 +109,7 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
                     noData(true, text);
                 }
         );
+        users.setHasFixedSize(true);
         users.addOnScrollListener(adapter.getOnScrollListener());
         users.setAdapter(adapter.getAdapter());
         users.setItemAnimator(new DefaultItemAnimator());
@@ -144,16 +141,16 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putInt(Constants.EXTRAS_NEXT_PAGE, nextPage);
-        savedInstanceState.putInt(Constants.EXTRAS_TOTAL_PAGES, currentPage);
+        savedInstanceState.putInt(Constants.EXTRAS_NEXT_PAGE, mainPagination.getNextPage());
+        savedInstanceState.putInt(Constants.EXTRAS_CURRENT_PAGE, mainPagination.getCurrentPage());
         savedInstanceState.putString(Constants.EXTRAS_FILTER, filter);
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-        nextPage = savedInstanceState.getInt(Constants.EXTRAS_NEXT_PAGE);
-        currentPage = savedInstanceState.getInt(Constants.EXTRAS_TOTAL_PAGES);
+        mainPagination.setNextPage(savedInstanceState.getInt(Constants.EXTRAS_NEXT_PAGE));
+        mainPagination.setCurrentPage(savedInstanceState.getInt(Constants.EXTRAS_CURRENT_PAGE));
         filter = savedInstanceState.getString(Constants.EXTRAS_FILTER);
     }
 
@@ -249,11 +246,8 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void showUsers(List<User> users, int page) {
-        this.currentPage = page;
-        nextPage++;
-        Log.i(Constants.TAG, "Current page: " + currentPage);
-        Log.i(Constants.TAG, "Next page: " + nextPage);
-        adapter.showUsers(users, nextPage > FIRST_PAGE);
+        mainPagination.setPage(page);
+        adapter.showUsers(users, mainPagination.isNotFirstPage());
         noData(adapter.isEmpty(), getString(R.string.no_data_available));
     }
 
@@ -277,8 +271,7 @@ public final class MainActivity extends AppCompatActivity implements IMainView {
     private void doAfterClearingAdapter(Consumer consumer) {
         filter = "";
         adapter.clearLists();
-        nextPage = FIRST_PAGE;
-        currentPage = FIRST_PAGE;
+        mainPagination.resetPage();
         consumer.consume();
     }
 
